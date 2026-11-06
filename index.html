@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdCollect Panel Mobile</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --accent: #10b981;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        h1 { font-size: 1.4rem; text-align: center; color: #6366f1; }
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0284c722;
+            border: 1px solid #0284c7;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--accent);
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button.active { background: #ef4444; }
+        .log-box {
+            font-family: monospace;
+            font-size: 0.85rem;
+            background: #090d16;
+            padding: 12px;
+            border-radius: 8px;
+            height: 150px;
+            overflow-y: auto;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AdCollect Paneliste</h1>
+        
+        <div class="status">
+            <span>Statut du service :</span>
+            <span><span class="dot"></span> En attente</span>
+        </div>
+
+        <div class="card">
+            <h3>Consentement & Capture</h3>
+            <p style="font-size: 0.9rem; color: #94a3b8;">
+                Cette application enregistre localement l'écran et le son uniquement lors de la détection de séquences publicitaires.
+            </p>
+            <button id="toggleBtn" onclick="toggleCapture()">Démarrer la session de test</button>
+        </div>
+
+        <div class="card">
+            <h3>Journal d'activité</h3>
+            <div class="log-box" id="logs">
+                > Initialisation du module AdCollect...<br>
+                > Prêt pour l'analyse des flux.<br>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isRunning = false;
+        function toggleCapture() {
+            const btn = document.getElementById('toggleBtn');
+            const logs = document.getElementById('logs');
+            isRunning = !isRunning;
+            
+            if (isRunning) {
+                btn.innerText = "Arrêter la session";
+                btn.classList.add('active');
+                logs.innerHTML += "> [INFO] Capture d'écran et audio activée.<br>";
+                logs.innerHTML += "> [RESEAU] Monitoring des requêtes AdMob/Meta/TikTok en cours...<br>";
+            } else {
+                btn.innerText = "Démarrer la session de test";
+                btn.classList.remove('active');
+                logs.innerHTML += "> [INFO] Session suspendue.<br>";
+            }
+        }
+    </script>
+</body>
+</html>
